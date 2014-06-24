@@ -66,3 +66,8 @@ describe 'sequelize-utils :: property :: JSON', ->
       expect(model.prop).to.equals('1,2,3')
       expect(model.getDataValue('prop')).to.equals('"1,2,3"')
 
+    it 'Can be created without options', ->
+      sequelize.define('utils_property_json_without_options', {
+        prop: utils.property.json('prop')
+      })
+

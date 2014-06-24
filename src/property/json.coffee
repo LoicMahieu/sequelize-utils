@@ -8,7 +8,7 @@ parse = JSON.parse
 jsonGetter = module.exports = (propName, options) ->
   ## Getter
   customGetter = options?.get
-  delete options.get
+  delete options?.get
   getter = ->
     cache = createModelCache @, propName
 
@@ -25,8 +25,7 @@ jsonGetter = module.exports = (propName, options) ->
 
   ## Setter
   customSetter = options?.set
-  delete options.set
-  sep = options.separator or ','
+  delete options?.set
   setter = (value) ->
     if customSetter
       value = customSetter.call @, value

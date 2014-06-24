@@ -29,8 +29,6 @@ describe 'property.list', ->
       setter.should.have.been.called()
 
 
-
-
     it 'Can create a model with a list property', ->
       model = Model.build(prop: [])
 
@@ -74,3 +72,8 @@ describe 'property.list', ->
       model.prop = some: object: true
       expect(model.prop).to.deep.equals([])
       expect(model.getDataValue('prop')).to.equals('')
+
+    it 'Can be created without options', ->
+      sequelize.define('utils_property_list_without_options', {
+        prop: utils.property.list('prop')
+      })

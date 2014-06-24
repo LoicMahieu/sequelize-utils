@@ -12,7 +12,7 @@ parse = (value, separator) ->
 listGetter = module.exports = (propName, options) ->
   ## Getter
   customGetter = options?.get
-  delete options.get
+  delete options?.get
   getter = ->
     cache = createModelCache @, propName
 
@@ -29,8 +29,8 @@ listGetter = module.exports = (propName, options) ->
 
   ## Setter
   customSetter = options?.set
-  delete options.set
-  sep = options.separator or ','
+  delete options?.set
+  sep = options?.separator or ','
   setter = (value) ->
     if _.isArray(value)
       value = value.join sep
