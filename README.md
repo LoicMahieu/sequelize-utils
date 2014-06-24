@@ -1,8 +1,12 @@
 sequelize-utils
 ===============
 
-# Properties
+```
+npm install --save sequelize-utils
+```
 
+
+# Properties
 
 ## JSON
 
