@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "main": "lib/sequelize-utils.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "prepublish": "grunt src"
   },
   "devDependencies": {
     "chai": "^1.9.1",
