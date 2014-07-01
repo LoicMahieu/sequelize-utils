@@ -14,13 +14,13 @@ describe 'sequelize-utils :: property :: JSON', ->
     setter = chai.spy (d) -> d
 
     before (done) ->
-      Model = sequelize.define('utils_property_list', {
+      Model = sequelize.define('utils_property_json', {
         prop: utils.property.json('prop',
           get: getter
           set: setter
         )
       })
-      sequelize.sync(force: true).done done
+      Model.sync(force: true).done done
 
     # At least one getter or setter should be called in this test
     after 'options.get should be called', ->
@@ -66,8 +66,28 @@ describe 'sequelize-utils :: property :: JSON', ->
       expect(model.prop).to.equals('1,2,3')
       expect(model.getDataValue('prop')).to.equals('"1,2,3"')
 
-    it 'Can be created without options', ->
-      sequelize.define('utils_property_json_without_options', {
-        prop: utils.property.json('prop')
-      })
+    it 'Can populate with object and retrieve from DB', (done) ->
+      data = some: object: true
+      model = Model.build(prop: data)
+      
+      expect(model.prop).to.deep.equals(data)
+
+      model.__old_model = true
+
+      debugger
+
+      model.save().done (err) ->
+        return done err if err
+        Model.find(where: id: model.id).done (err, _model) ->
+          return done err if err
+          expect(_model.__old_model).to.be.a('undefined')
+          expect(_model.prop).to.deep.equals(data)
+
+          done()
+
+
+    # it 'Can be created without options', ->
+    #   sequelize.define('utils_property_json_without_options', {
+    #     prop: utils.property.json('prop')
+    #   })
 

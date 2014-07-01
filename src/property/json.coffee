@@ -1,9 +1,19 @@
 
 _ = require 'lodash'
 
+
 {createModelCache} = require './property-utils'
 
 parse = JSON.parse
+
+isJSONRegex = require 'is-json'
+isJSON = (value) ->
+  return false unless isJSONRegex(value)
+  try
+    parse(value)
+  catch err
+    return false
+  return true
 
 jsonGetter = module.exports = (propName, options) ->
   ## Getter
@@ -27,11 +37,12 @@ jsonGetter = module.exports = (propName, options) ->
   customSetter = options?.set
   delete options?.set
   setter = (value) ->
-    if customSetter
-      value = customSetter.call @, value
+    unless isJSON(value)
+      if customSetter
+        value = customSetter.call @, value
 
-    unless _.isUndefined(value)
-      value = JSON.stringify value, null, 2
+      unless _.isUndefined(value)
+        value = JSON.stringify value, null, 2
 
     cache = createModelCache @, propName
     delete cache.deserialized

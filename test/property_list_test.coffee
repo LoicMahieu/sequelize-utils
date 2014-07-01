@@ -20,7 +20,7 @@ describe 'property.list', ->
           set: setter
         )
       })
-      sequelize.sync(force: true).done done
+      Model.sync(force: true).done done
 
     # At least one getter or setter should be called in this test
     after 'options.get should be called', ->
