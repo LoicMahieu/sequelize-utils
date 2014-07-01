@@ -1,10 +1,29 @@
 {
   "name": "sequelize-utils",
   "version": "0.0.5",
+  "description": "Set of utilities for Sequelize",
+  "keywords": [
+    "sequelize"
+  ],
   "main": "lib/sequelize-utils.js",
   "scripts": {
     "test": "grunt test",
     "prepublish": "grunt src"
+  },
+  "homepage": "https://github.com/loicmahieu/sequelize-utils",
+  "bugs": "https://github.com/loicmahieu/sequelize-utils/issues",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/loicmahieu/sequelize-utils.git"
+  },
+  "author": {
+    "name": "Loïc Mahieu",
+    "email": "mahieuloic@gmail.com"
+  },
+  "contributors": [],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.8"
   },
   "devDependencies": {
     "chai": "^1.9.1",
