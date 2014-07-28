@@ -36,7 +36,10 @@ jsonGetter = module.exports = (propName, options) ->
   ## Setter
   customSetter = options?.set
   delete options?.set
-  indent = if !_.isUndefined(options.indent) then options.indent else 2
+  indent = 2
+  if !_.isUndefined(options.indent)
+    indent = options.indent
+    delete options.indent
   setter = (value) ->
     unless isJSON(value)
       if customSetter
