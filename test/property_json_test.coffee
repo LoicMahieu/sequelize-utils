@@ -91,3 +91,18 @@ describe 'sequelize-utils :: property :: JSON', ->
     #     prop: utils.property.json('prop')
     #   })
 
+  describe 'Options: indent', ->
+    Model = sequelize.define('utils_property_json', {
+      prop: utils.property.json('prop',
+        indent: 0
+      )
+    })
+    it 'Can overwrite default indent to 0', ->
+      model = Model.build(prop: [])
+      model.prop = ['1', '2', '3']
+      expect(model.getDataValue('prop')).to.equals('["1","2","3"]')
+      model.prop = '1,2,3'
+      expect(model.getDataValue('prop')).to.equals('"1,2,3"')
+      model.prop = {prop: 1}
+      expect(model.getDataValue('prop')).to.equals('{"prop":1}')
+
