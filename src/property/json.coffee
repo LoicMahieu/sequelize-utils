@@ -36,13 +36,14 @@ jsonGetter = module.exports = (propName, options) ->
   ## Setter
   customSetter = options?.set
   delete options?.set
+  indent = if !_.isUndefined(options.indent) then options.indent else 2
   setter = (value) ->
     unless isJSON(value)
       if customSetter
         value = customSetter.call @, value
 
       unless _.isUndefined(value)
-        value = JSON.stringify value, null, 2
+        value = JSON.stringify value, null, indent
 
     cache = createModelCache @, propName
     delete cache.deserialized
