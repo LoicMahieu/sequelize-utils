@@ -10,6 +10,10 @@ npm install --save sequelize-utils
 
 ## JSON
 
+### Options
+
+`indent`: Causes the resulting string to be pretty-printed. Default: 2
+
 ```
 Model = sequelize.define('utils_property_list', {
   prop: utils.property.json('prop')
@@ -18,6 +22,10 @@ Model = sequelize.define('utils_property_list', {
 
 
 ## List
+
+### Options
+
+`separator`: Delimiter. Default: ','
 
 ```
 Model = sequelize.define('utils_property_list', {
