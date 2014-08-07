@@ -5,6 +5,13 @@ _ = require 'lodash'
 {createModelCache} = require './property-utils'
 
 parse = JSON.parse
+parseSafe = (value) ->
+  unless value
+    return
+  try
+    return parse(value)
+  catch err
+    console.error err
 
 isJSONRegex = require 'is-json'
 isJSON = (value) ->
@@ -26,7 +33,7 @@ jsonGetter = module.exports = (propName, options) ->
       return cache.deserialized
 
     model = @
-    cache.deserialized = parse @getDataValue(propName)
+    cache.deserialized = parseSafe @getDataValue(propName)
 
     if customGetter
       cache.deserialized = customGetter.call @, cache.deserialized
