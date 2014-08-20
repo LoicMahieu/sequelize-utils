@@ -77,3 +77,21 @@ describe 'property.list', ->
       sequelize.define('utils_property_list_without_options', {
         prop: utils.property.list('prop')
       })
+
+    it 'Stringify defaultValue: accept string', ->
+      _Model = sequelize.define('utils_property_list_stringify_defaultValue', {
+        prop: utils.property.list('prop',
+          defaultValue: '1,2,3'
+        )
+      })
+      model = _Model.build()
+      expect(model.prop).to.deep.equals(['1', '2', '3'])
+
+    it 'Stringify defaultValue: accept array', ->
+      _Model = sequelize.define('utils_property_list_stringify_defaultValue', {
+        prop: utils.property.list('prop',
+          defaultValue: ['1', '2', '3']
+        )
+      })
+      model = _Model.build()
+      expect(model.prop).to.deep.equals(['1', '2', '3'])

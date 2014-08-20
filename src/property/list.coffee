@@ -4,12 +4,22 @@ _ = require 'lodash'
 {createModelCache} = require './property-utils'
 
 parse = (value, separator) ->
-  if !value.length or !_.isFunction(value.split)
+  if _.isUndefined(value) or !value.length or !_.isFunction(value.split)
     return []
   else
     return value.split separator
 
+stringify = (value, separator) ->
+  if _.isArray(value)
+    return value.join separator
+  else if not _.isString(value)
+    return ''
+  else
+    return value
+
 listGetter = module.exports = (propName, options) ->
+  separator = options?.separator or ','
+
   ## Getter
   customGetter = options?.get
   delete options?.get
@@ -20,7 +30,7 @@ listGetter = module.exports = (propName, options) ->
       return cache.deserialized
 
     model = @
-    cache.deserialized = parse @getDataValue(propName), sep
+    cache.deserialized = parse @getDataValue(propName), separator
 
     if customGetter
       cache.deserialized = customGetter.call @, cache.deserialized
@@ -30,12 +40,8 @@ listGetter = module.exports = (propName, options) ->
   ## Setter
   customSetter = options?.set
   delete options?.set
-  sep = options?.separator or ','
   setter = (value) ->
-    if _.isArray(value)
-      value = value.join sep
-    else if not _.isString(value)
-      value = ''
+    value = stringify(value, separator)
 
     if customSetter
       value = customSetter.call @, value
@@ -44,6 +50,10 @@ listGetter = module.exports = (propName, options) ->
     delete cache.deserialized
 
     @setDataValue propName, value
+
+  ## Default value
+  if options?.defaultValue
+    options.defaultValue = stringify(options.defaultValue)
 
   _.extend
     type: 'LONGTEXT'
