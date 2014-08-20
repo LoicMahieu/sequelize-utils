@@ -22,7 +22,16 @@ isJSON = (value) ->
     return false
   return true
 
+stringify = (value, indent) ->
+  unless _.isUndefined(value)
+    value = JSON.stringify value, null, indent
+
 jsonGetter = module.exports = (propName, options) ->
+  indent = 2
+  if !_.isUndefined(options?.indent)
+    indent = options.indent
+    delete options.indent
+
   ## Getter
   customGetter = options?.get
   delete options?.get
@@ -43,22 +52,20 @@ jsonGetter = module.exports = (propName, options) ->
   ## Setter
   customSetter = options?.set
   delete options?.set
-  indent = 2
-  if !_.isUndefined(options?.indent)
-    indent = options.indent
-    delete options.indent
   setter = (value) ->
     unless isJSON(value)
       if customSetter
         value = customSetter.call @, value
 
-      unless _.isUndefined(value)
-        value = JSON.stringify value, null, indent
+      value = stringify(value, indent)
 
     cache = createModelCache @, propName
     delete cache.deserialized
 
     @setDataValue propName, value
+
+  if options?.defaultValue
+    options.defaultValue = stringify(options.defaultValue)
 
   _.extend
     type: 'LONGTEXT'

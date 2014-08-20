@@ -69,12 +69,10 @@ describe 'sequelize-utils :: property :: JSON', ->
     it 'Can populate with object and retrieve from DB', (done) ->
       data = some: object: true
       model = Model.build(prop: data)
-      
+
       expect(model.prop).to.deep.equals(data)
 
       model.__old_model = true
-
-      debugger
 
       model.save().done (err) ->
         return done err if err
@@ -106,3 +104,13 @@ describe 'sequelize-utils :: property :: JSON', ->
       model.prop = {prop: 1}
       expect(model.getDataValue('prop')).to.equals('{"prop":1}')
 
+  describe 'Options: defaultValue', ->
+    Model = sequelize.define('utils_property_json', {
+      prop: utils.property.json('prop',
+        defaultValue: {prop: 1}
+      )
+    })
+    it 'Stringify defaultValue', ->
+      model = Model.build()
+      expect(model.prop).to.deep.equals({prop: 1})
+      expect(model.getDataValue('prop')).to.equals('{"prop":1}')
