@@ -4,7 +4,7 @@ _ = require 'lodash'
 {createModelCache} = require './property-utils'
 
 parse = (value, separator) ->
-  if _.isUndefined(value) or !value.length or !_.isFunction(value.split)
+  if !value?.length or !_.isFunction(value?.split)
     return []
   else
     return value.split separator
