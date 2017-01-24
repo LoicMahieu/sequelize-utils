@@ -1,6 +1,8 @@
 sequelize-utils
 ===============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/LoicMahieu/sequelize-utils.svg)](https://greenkeeper.io/)
+
 ```
 npm install --save sequelize-utils
 ```
