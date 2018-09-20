@@ -1,6 +1,6 @@
 {
   "name": "sequelize-utils",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Set of utilities for Sequelize",
   "keywords": [
     "sequelize"
