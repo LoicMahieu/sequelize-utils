@@ -15,6 +15,8 @@ parseSafe = (value) ->
 
 isJSONRegex = require 'is-json'
 isJSON = (value) ->
+  return true if value == '"[]"'
+  return true if value == '"{}"'
   return false unless isJSONRegex(value)
   try
     parse(value)
